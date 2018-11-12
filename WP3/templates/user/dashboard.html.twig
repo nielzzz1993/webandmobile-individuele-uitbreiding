@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Delete users{% endblock %}
+{% block body %}
+<script>
+function process()
+{
+var url="http://127.0.0.1:8000/messages-keyword?keyword=" + document.getElementById("search").value;
+location.href=url;
+return false;
+}
+</script>
+<script>
+    function process() {
+      var url = "http://127.0.0.1:8000/messages-keyword?keyword=" + document.getElementById("search").value;
+      location.href = url;
+      return false;
+    }
+  </script>
+  {% include('navbar/navbar.html.twig') %}
+
+<ul class="list-group">
+    {% for u in users %}
+        <li class="list-group-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        {{u.username}}
+                    </div>
+                    <div class="col-sm">
+                        <a href="{{path('user.edit', {id: u.id})}}">
+                            Change User
+                        </a>
+                    </div>
+                    <div class="col-sm">
+                        <a href="{{path('user.delete', {id: u.id})}}">
+                            Delete User
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

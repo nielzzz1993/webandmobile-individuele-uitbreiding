@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All messages{% endblock %}
+{% block body %}
+  <script>
+    function process() {
+      var url = "http://127.0.0.1:8000/messages-keyword?keyword=" + document.getElementById("search").value;
+      location.href = url;
+      return false;
+    }
+  </script>
+  {% include('navbar/navbar.html.twig') %}
+  {% for m in messages %}
+    <div class="card mb-3">
+      <div class="card-header text-white" onclick="window.location.href='http://127.0.0.1:8000/message/{{m.id}}'">
+        <h2>{{m.title}}</h2>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{m.category}}</h5>
+        <p class="card-text">{{m.content}}</p>
+        <button type="button" class="btn btn-lg btn-primary" onclick="window.location.href='{{ path('upvote', {id: m.id})}}'">
+          <i class="glyphicon glyphicon-thumbs-up">↑</i>
+        </button>
+        <button type="button" class="btn btn-lg btn-primary" onclick="window.location.href='{{ path('downvote', {id: m.id})}}'">
+          <i class="glyphicon glyphicon-thumbs-down">↓</i>
+        </button>
+        {% if is_granted('ROLE_MODERATOR') %}
+          <button type="button" class="btn btn-lg btn-primary" onclick="window.location.href='{{ path('message.delete', {id: m.id})}}'">
+            Delete
+          </button>
+        {% elseif is_granted('ROLE_USER') %}
+          {% if app.user.getId()==m.user.getId() %}
+            <button type="button" class="btn btn-lg btn-primary" onclick="window.location.href='{{ path('message.edit', {id: m.id})}}'">
+              Edit
+            </button>
+            <button type="button" class="btn btn-lg btn-primary" onclick="window.location.href='{{ path('message.delete', {id: m.id})}}'">
+              Delete
+            </button>
+          {% endif%}
+        {% endif %}
+      </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,180 @@
+/*Default style for bulletinboard
+  _______________________________*/
+/*COLORS*/
+/*white*/
+.btn-primary,
+.btn-primary:hover,
+.navbar,
+.navbar-brand,
+.navbar-toggler-icon,
+.nav-link,
+.nav-pills>.active>a {
+  color: #FFF
+}
+
+/*BACKGROUND-COLORS*/
+/*green*/
+.btn-primary,
+.card-header,
+.btn-primary:hover,
+.navbar,
+.nav-pills>.active>a,
+.nav-pills>.active>a:focus {
+  background-color: #58A618
+}
+
+/* BORDER */
+/*white*/
+.btn-primary,
+.btn-primary:hover,
+.nav-pills>.active>a,
+.nav-pills>.active>a:focus {
+  border: 1pt solid #FFF
+}
+
+/* BORDER-RADIUS */
+/*3pt*/
+.card,
+.btn-primary,
+.btn-primary:hover,
+.nav-pills>.active>a {
+  border-radius: 3pt;
+}
+
+.btn-primary:hover,
+.nav-pills>.active>a {
+  font-weight: bold;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+input[type=text],
+input[type=password],
+.navbar-brand,
+.nav-link {
+  padding: 2pt
+}
+
+.btn-primary:focus,
+.nav-pills>.active>a:focus {
+  border: none;
+  box-shadow: none;
+}
+
+/*HTML controls*/
+input[type=text],
+input[type=password] {
+  max-width: 250pt;
+}
+
+/* __Textbox borders__ */
+.form-control:focus {
+  border: 1pt solid #58A618;
+  box-shadow: none;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.nav-pills>.active>a {
+  margin: 0
+}
+
+.card {
+  margin: 15pt auto;
+}
+
+.btn-primary,
+.btn-primary:hover {
+  min-width: 50pt
+}
+
+.btn-primary,
+.btn-primary:hover {
+  min-height: 25pt
+}
+
+
+/* __Textbox borders__ */
+.form-control {
+  margin: 5pt 0;
+}
+
+card {
+  padding: 5pt;
+}
+
+/*[FONT-SIZE]
+  15pt*/
+body,
+.btn-primary,
+.nav-pills>.active>a {
+  font-size: 15pt;
+  padding: 0 25pt;
+}
+
+body {
+  margin-top: 75pt;
+}
+
+/*18pt*/
+h4 {
+  font-size: 18pt
+}
+
+/*20pt*/
+h3 {
+  font-size: 20pt
+}
+
+/*24pt*/
+h2 {
+  font-size: 24pt
+}
+
+/*28pt*/
+h1 {
+  font-size: 28pt
+}
+
+/* Students-image */
+#students-image {
+  width: 50%;
+  z-index: -1;
+  position: absolute;
+  bottom: 0pt;
+  right: 0pt;
+}
+
+/*Media queries*/
+@media only screen and (max-width:480pt) {
+  h1 {
+    font-size: 22pt
+  }
+
+  h2 {
+    font-size: 20pt
+  }
+
+  h3 {
+    font-size: 18pt
+  }
+
+  h4 {
+    font-size: 16pt
+  }
+}
+
+.card {
+  background-color: #DDD;
+}
+
+.card {
+  max-width: 50rem;
+}

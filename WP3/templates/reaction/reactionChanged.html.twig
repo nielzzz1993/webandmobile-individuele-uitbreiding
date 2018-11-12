@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reaction changed!{% endblock %}
+
+{% block body %}
+  <div class="container">
+    {% if error == true %}
+      <h1>ERROR token not valid</h1>
+    {% else %}
+      <h2>Reaction changed to
+        {{newReaction.content}}</h2>
+    {% endif %}
+  </div>
+{% endblock %}

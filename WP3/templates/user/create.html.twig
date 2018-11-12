@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Edit users{% endblock %}
+{% block body %}
+<script>
+function process()
+{
+var url="http://127.0.0.1:8000/messages-keyword?keyword=" + document.getElementById("search").value;
+location.href=url;
+return false;
+}
+</script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ path('messages')}}">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="/login">Login</a>
+      {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item">
+            <a class="nav-item nav-link" href="{{ path('user.dashboard')}}">User Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-item nav-link" href="{{ path('user.create')}}">Create User</a>
+          </li>
+      {% endif %}
+    </div>
+  </div>
+  <form class="card card-sm" onsubmit="return process();">
+    <div class="card-body row no-gutters align-items-center">
+        <div class="col-auto">
+            <i class="fas fa-search text-body"></i>
+        </div>
+        <!--end of col-->
+        <div class="col">
+            <input class="form-control form-control-borderless" name="search" id="search" type="search" placeholder="Search messages">
+        </div>
+        <!--end of col-->
+        <div class="col-auto">
+            <button class="btn btn-success" type="submit">Search</button>
+        </div>
+        <!--end of col-->
+    </div>
+  </form>
+</nav>
+
+<div class="panel" >
+    <div class="panel-heading">
+        {{ user.username }}
+    </div>
+    <div class="panel-body">
+        {{ form(form) }}
+    </div>
+</div>
+
+
+{% endblock %}
