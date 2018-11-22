@@ -12,7 +12,7 @@
   {% include('navbar/navbar.html.twig') %}
   {% for m in messages %}
     <div class="card mb-3">
-      <div class="card-header text-white" onclick="window.location.href='http://127.0.0.1:8000/message/{{m.id}}'">
+      <div class="card-header text-white" onclick="window.location.href='{{ path('message', {id: m.id})}}'">
         <h2>{{m.title}}</h2>
       </div>
       <div class="card-body">
@@ -42,5 +42,7 @@
     </div>
   </a>
 {% endfor %}
+
+
 
 {% endblock %}

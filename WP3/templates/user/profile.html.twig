@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Profile{% endblock %}
+{% block body %}
+<script>
+function process()
+{
+var url="http://127.0.0.1:8000/messages-keyword?keyword=" + document.getElementById("search").value;
+location.href=url;
+return false;
+}
+</script>
+<script>
+    function process() {
+      var url = "http://127.0.0.1:8000/messages-keyword?keyword=" + document.getElementById("search").value;
+      location.href = url;
+      return false;
+    }
+</script>
+{% include('navbar/navbar.html.twig') %}
+
+
+<ul class="list-group">
+        <li class="list-group-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        Username
+                    </div>
+                    <div class="col-sm">
+                        {{app.user.username}}
+                    </div>
+                </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        Picture
+                    </div>
+                    <div class="col-sm">
+
+                      <form action="{{ oneup_uploader_endpoint('gallery') }}" class="dropzone" style="width:200px; height:200px; border:4px dashed black">
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </li>
+</ul>
+{% endblock %}

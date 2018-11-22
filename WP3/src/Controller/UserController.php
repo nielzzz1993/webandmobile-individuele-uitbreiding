@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\UserRepository;
 use App\Entity\User;
 use App\Form\UserType;
+use App\EventListener\UploadListener;
 
 class UserController extends AbstractController
 {
@@ -19,16 +20,6 @@ class UserController extends AbstractController
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
-    }
-
-    /**
-     * @Route("/user", name="user")
-     */
-    public function index()
-    {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
     }
 
     /**
@@ -126,4 +117,15 @@ class UserController extends AbstractController
             'users' => $users
         ]);
     }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * 
+     * @Route("/profile", name="profile")
+     */
+    public function profile()
+    {
+        return $this->render('user/profile.html.twig');
+    }
+
 }

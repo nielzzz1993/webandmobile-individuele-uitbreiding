@@ -1,10 +1,9 @@
 
 ###> symfony/framework-bundle ###
+/.env
 /public/bundles/
-/var/
+/node_modules/
 /vendor/
-/data/
-/public/uploads/gallery/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

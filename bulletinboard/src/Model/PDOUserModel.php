@@ -2,6 +2,9 @@
 namespace App\Model;
 
 use App\model\SecurityToken;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gaufrette\Filesystem;
+use Gaufrette\Adapter\Local as LocalAdapter;
 use \PDO;
 
 class PDOUserModel implements UserModel
@@ -98,6 +101,93 @@ class PDOUserModel implements UserModel
         $password = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $password;
+    }
+
+    public function setPicture($id, $content)
+    {
+        $this->validateId($id);
+
+        $adapter = new LocalAdapter('/var/images');
+        $filesystem = new Filesystem($adapter);
+        
+        $pdo = $this->connection->getPDO();
+
+        $statement = $pdo->prepare('SELECT image_id FROM user WHERE id=:id');
+        $statement->bindParam(':id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        $user = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        do{
+            $name = uniqid('image');
+        }while($filesystem->has($name));
+
+        $statement = $pdo->prepare("INSERT INTO image (picture) VALUES (:image)");
+        $statement->bindParam(':image', $name);
+        $statement->execute();
+
+        $statement = $pdo->prepare('SELECT LAST_INSERT_ID()');
+        $statement->execute();
+
+        $lastId = $statement->fetchColumn();
+
+        $statement = $pdo->prepare('UPDATE user SET image_id =:imageId WHERE id=:id');
+        $statement->bindParam(':id', $id, \PDO::PARAM_INT);
+        $statement->bindParam(':imageId', $lastId, \PDO::PARAM_INT);
+        $statement->execute();
+
+        $filesystem->write($name, $content);
+
+        return $lastId;
+    }
+
+    public function removePicture($id){
+        $this->validateId($id);
+        
+        $pdo = $this->connection->getPDO();
+
+        $statement = $pdo->prepare('SELECT image_id FROM user WHERE id=:id');
+        $statement->bindParam(':id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        $user = $statement->fetchColumn(0);
+
+        $statement = $pdo->prepare('UPDATE user SET image_id = 1 WHERE id=:id');
+        $statement->bindParam(':id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        if($user!=1)
+        {
+            $statement = $pdo->prepare("DELETE FROM image WHERE id=:imageId");
+            $statement->bindParam(':imageId', $user, \PDO::PARAM_INT);
+            $statement->execute();
+        }
+
+        return "";
+    }
+
+    public function getPicture($id)
+    {
+        $this->validateId($id);
+
+        $adapter = new LocalAdapter('/var/images');
+        $filesystem = new Filesystem($adapter);
+
+        $pdo = $this->connection->getPDO();
+
+        $statement = $pdo->prepare('SELECT image_id FROM user WHERE id=:id');
+        $statement->bindParam(':id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        $user = $statement->fetchColumn(0);
+
+        $statement = $pdo->prepare("Select picture FROM image WHERE id=:imageId");
+        $statement->bindParam(':imageId', $user, \PDO::PARAM_INT);
+        $statement->execute();
+
+        $fileName = $statement->fetchColumn(0);
+
+        return $filesystem->read($fileName);
     }
 
     private function validateId($id)

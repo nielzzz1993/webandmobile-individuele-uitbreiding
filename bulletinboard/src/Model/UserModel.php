@@ -11,4 +11,7 @@ interface UserModel
     public function getMessageById($id);
     public function getUsername($username);
     public function getPassword($username);
+    public function setPicture($id, $content);
+    public function removePicture($id);
+    public function getPicture($id);
 }
